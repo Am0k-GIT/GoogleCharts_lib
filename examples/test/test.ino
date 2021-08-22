@@ -245,10 +245,10 @@ void setup()
         newAreaChart.push(1628925528000, 63.97, 94.17);
         newAreaChart.push(1629025528000, 63.98, 94.16);
         newAreaChart.push(1629125528000, 63.97, 94.19);
-        newSteppedAreaChart.push("Alfred Hitchcock (1935)", 7.9, 8.4);
-        newSteppedAreaChart.push("Ralph Thomas (1959)", 6.5, 6.9);
-        newSteppedAreaChart.push("Don Sharp (1978)", 6.4, 6.5);
-        newSteppedAreaChart.push("James Hawes (2008)", 6.2, 4.4);
+        newSteppedAreaChart.push("Alfred Hitchcock 1935", 7.9, 8.4);
+        newSteppedAreaChart.push("Ralph Thomas 1959", 6.5, 6.9);
+        newSteppedAreaChart.push("Don Sharp 1978", 6.4, 6.5);
+        newSteppedAreaChart.push("James Hawes 2008", 6.2, 4.4);
 }
 
 void loop() 
