@@ -12,7 +12,7 @@ const char pass[] = "MyPassword";
 
 const char HTML_head[] PROGMEM = R"(<!DOCTYPE html> 
         <meta http-equiv='Content-Type' content=text/html; charset='utf-8'>
-        <title>Smart Home Server</title>
+        <title>GoogleCharts Library Example Page</title>
         <style>
                 form {margin: 0 auto;width: 600px;padding: 1em;border: 1px solid #ccc;border-radius: 1em; background-color: rgb(247, 245, 240);}
                 h1 {text-align: center;}
@@ -55,13 +55,6 @@ const char HTML_main[] PROGMEM = R"(
         (X - 1 column of data, A - 2 column of data, B - 3 column of data (optional with extraData = true)).
         </p>
         <p>
-        <mark>GoogleCharts.setTitle(String title);</mark> - top caption for Google Charts.
-        </p>
-        <p>
-        <mark>GoogleCharts.setVerticalTitle(String vtitleA, String vtitleA);</mark> - Y-axis labels 
-        (vtitleA for left axis, vtitleB for right axis if extraData = true).
-        </p>
-        <p>
         <mark>GoogleCharts.setLegendIntervale (uint8_t intervale);</mark> - label interval for x-axis values.
         </p>
         <p>
@@ -76,12 +69,24 @@ const char HTML_main[] PROGMEM = R"(
         (default "HH: mm"), can be used to format unix epoch time.
         </p>
         <p>
+        <mark>GoogleCharts.setLeftStyle(String label, String title = "", String HTMLcolor = "");</mark> - setting the style of the left Y-axis.
+        </p>
+        <p>
+        <mark>GoogleCharts.setRightStyle(String label, String title = "", String HTMLcolor = "");</mark> - setting the style of the right Y-axis.
+        </p>
+        <p>
+        <mark>GoogleCharts.setHorizontalTitle(String title);</mark> - top caption for Google Charts.
+        </p>
+        <p>
+        <mark>GoogleCharts.setHorizontalLabel(String label);</mark> - X chart column name.
+        </p>
+        <p>
         <mark>GoogleCharts.ready();</mark> - returns bool true if the stack has data to display, bool false if the stack is empty.
         </p>
         <p>
-        <mark>GoogleCharts.getCharts(uint8_t type, uint16_t width, uint16_t height, String labelX, String labelYA, String HTMLcolorA, String labelYB, String HTMLcolorB);</mark> 
-        - returns a string to be embedded in an HTML form (type - visualization type (0 - Line Chart, 1 - Pie Chart, 2 - Area Chart, 3 - Stepped Area Chart), width - render width (pixels), 
-        height - render height (pixels), labelX, labelYA, labelYB - chart column names, HTMLcolorA, HTMLcolorB - chart colors).
+        <mark>GoogleCharts.getCharts(uint8_t type, uint16_t width, uint16_t height);</mark> 
+        - returns a string to be embedded in an HTML form (type - visualization type (0 - Line Chart, 1 - Pie Chart, 2 - Area Chart, 
+        3 - Stepped Area Chart), width - render width (pixels), height - render height (pixels)).
         </p>
         <h3> Library version: 1.0.0</h3>
         <p>
@@ -110,11 +115,13 @@ void handleLineChart()
         newLineChart.setCurveFunction(true);
         newLineChart.setDateFormat(true);
         newLineChart.setLegendIntervale(5);
-        newLineChart.setVerticalTitle("Temperature, C", "Pressure, mmHg");
+        newLineChart.setLeftStyle("Temperature", "Temperature, C", "green");
+        newLineChart.setRightStyle("Pressure", "Pressure, mmHg", "orange");
+        newLineChart.setHorizontalLabel("Time");
         String str(FPSTR(HTML_head));
         if (newLineChart.ready())
         {
-                str += newLineChart.getCharts(0, 600, 450, "Time", "Temperature", "green", "Pressure", "orange");
+                str += newLineChart.getCharts(0, 600, 450);
         }
         str += FPSTR(HTML_end);
         HttpServer.send ( 200, "text/html", str );
@@ -122,11 +129,11 @@ void handleLineChart()
 
 void handlePieChart() 
 {
-        newPieChart.setTitle("Dev. tools");
+        newPieChart.setLeftStyle("Dev. tools");
         String str(FPSTR(HTML_head));
         if (newPieChart.ready())
         {
-                str += newPieChart.getCharts(1, 600, 450, "Dev. tools");
+                str += newPieChart.getCharts(1, 600, 450);
         }
         str += FPSTR(HTML_end);
         HttpServer.send ( 200, "text/html", str );
@@ -136,12 +143,14 @@ void handleAreaChart()
 {
         newAreaChart.setMinValue(true, 63, 94);
         newAreaChart.setDateFormat(true, "MMM dd");
-        newAreaChart.setVerticalTitle("XAU", "XPD");
+        newAreaChart.setLeftStyle("Gold", "XAU", "gold");
+        newAreaChart.setRightStyle("Palladium", "XPD", "blue");
+        newAreaChart.setHorizontalLabel("Time");
         newAreaChart.setLegendIntervale(3);
         String str(FPSTR(HTML_head));
         if (newAreaChart.ready())
         {
-                str += newAreaChart.getCharts(2, 600, 450, "Time", "Gold", "gold", "Palladium", "blue");
+                str += newAreaChart.getCharts(2, 600, 450);
         }
         str += FPSTR(HTML_end);
         HttpServer.send ( 200, "text/html", str );
@@ -151,12 +160,14 @@ void handleSteppedAreaChart()
 {
         newSteppedAreaChart.setMinValue(true, 0, 0);
         newSteppedAreaChart.setLegendIntervale(1);
-        newSteppedAreaChart.setTitle(R"(The decline of \'The 39 Steps\')");
-        newSteppedAreaChart.setVerticalTitle("IDBM", "Rotten tomatoes");
+        newSteppedAreaChart.setHorizontalTitle(R"(The decline of \'The 39 Steps\')");
+        newSteppedAreaChart.setHorizontalLabel("Director (Year)");
+        newSteppedAreaChart.setLeftStyle("IDBM", "IDBM", "green");
+        newSteppedAreaChart.setRightStyle("Rotten tomatoes", "Rotten tomatoes", "blue");
         String str(FPSTR(HTML_head));
         if (newSteppedAreaChart.ready())
         {
-                str += newSteppedAreaChart.getCharts(3, 600, 450, "Director (Year)", "IDBM", "green", "Rotten tomatoes" , "blue");
+                str += newSteppedAreaChart.getCharts(3, 600, 450);
         }
         str += FPSTR(HTML_end);
         HttpServer.send ( 200, "text/html", str );
