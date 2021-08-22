@@ -1,0 +1,19 @@
+{
+  "name": "GoogleCharts",
+  "keywords": "GoogleCharts, IOT, visualization",
+  "description": "Google Charts API for IOT devices",
+  "authors":
+  [
+    {
+      "name": "Pavel Kolesov"
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Am0k-GIT/GoogleCharts_lib"
+  },
+  "version": "1.0.0",
+  "frameworks": "arduino",
+  "platforms": "espressif"
+}

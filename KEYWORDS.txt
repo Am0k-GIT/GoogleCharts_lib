@@ -1,0 +1,8 @@
+GoogleCharts KEYWORD1
+
+push KEYWORD2
+setLegendIntervale KEYWORD2
+setCurveFunction KEYWORD2
+setChartType KEYWORD2
+getCharts KEYWORD2
+ready KEYWORD2
